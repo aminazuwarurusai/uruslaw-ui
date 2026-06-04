@@ -13,10 +13,19 @@ export default function LoginPage() {
     if (!email || !password) { setError('Please enter your email and password.'); return }
     setError('')
     setLoading(true)
-    // TODO: connect to auth API
-    await new Promise(r => setTimeout(r, 1200))
-    setLoading(false)
-    setError('Invalid email or password.')
+    await new Promise(r => setTimeout(r, 1000))
+
+    // Test credentials — replace with real auth (Supabase / NextAuth) later
+    const TEST_EMAIL = 'admin@uruslaw.com'
+    const TEST_PASS  = 'uruslaw2026'
+
+    if (email === TEST_EMAIL && password === TEST_PASS) {
+      // Success — redirect to main app
+      window.location.href = 'http://localhost:3000'
+    } else {
+      setLoading(false)
+      setError('Invalid email or password.')
+    }
   }
 
   return (
