@@ -23,7 +23,7 @@ export default function LoginPage() {
       setLoading(false)
       setError('Invalid email or password.')
     } else {
-      window.location.href = 'http://localhost:3000'
+      window.location.href = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
     }
   }
 
