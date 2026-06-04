@@ -23,6 +23,24 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: { signIn: '/', signOut: '/signout' },
   session: { strategy: 'jwt' },
   callbacks: {
+    authorized({ auth: session, request }) {
+      const isLoggedIn = !!session?.user
+      const path = request.nextUrl.pathname
+      const isLoginPage  = path === '/'
+      const isSignout    = path === '/signout'
+      const isPublic     = isLoginPage || isSignout
+
+      // Logged in + hitting login page → redirect to main app
+      if (isLoggedIn && isLoginPage) {
+        const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+        return Response.redirect(new URL(appUrl))
+      }
+
+      // Not logged in + protected page → redirect to login
+      if (!isLoggedIn && !isPublic) return false
+
+      return true
+    },
     async jwt({ token, user }) {
       if (user) token.role = (user as { role?: string }).role
       return token
