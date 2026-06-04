@@ -10,13 +10,13 @@ export default function LoginPage() {
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
-    if (!email || !password) { setError('Sila isi emel dan kata laluan.'); return }
+    if (!email || !password) { setError('Please enter your email and password.'); return }
     setError('')
     setLoading(true)
     // TODO: connect to auth API
     await new Promise(r => setTimeout(r, 1200))
     setLoading(false)
-    setError('Emel atau kata laluan tidak sah.')
+    setError('Invalid email or password.')
   }
 
   return (
@@ -51,19 +51,19 @@ export default function LoginPage() {
             <div style={{ padding: '36px 40px 40px' }}>
               {/* Heading */}
               <h1 style={{ fontFamily: 'Verdana, sans-serif', fontSize: 22, fontWeight: 700, color: '#0A2540', marginBottom: 6, letterSpacing: '-.01em' }}>
-                Log Masuk
+                Sign In
               </h1>
               <p style={{ fontSize: 13, color: 'var(--text-dim)', marginBottom: 28 }}>
-                Masukkan maklumat akaun anda untuk teruskan.
+                Enter your credentials to access your account.
               </p>
 
               <form onSubmit={handleLogin}>
                 {/* Email */}
                 <div style={{ marginBottom: 16 }}>
-                  <label style={labelStyle}>Emel</label>
+                  <label style={labelStyle}>Email</label>
                   <input
                     type="email"
-                    placeholder="nama@syarikat.com"
+                    placeholder="name@company.com"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     style={inputStyle}
@@ -76,9 +76,9 @@ export default function LoginPage() {
                 {/* Password */}
                 <div style={{ marginBottom: 24 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                    <label style={labelStyle}>Kata Laluan</label>
+                    <label style={labelStyle}>Password</label>
                     <button type="button" style={{ fontSize: 11, color: 'var(--teal)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
-                      Lupa kata laluan?
+                      Forgot password?
                     </button>
                   </div>
                   <div style={{ position: 'relative' }}>
@@ -128,9 +128,9 @@ export default function LoginPage() {
                   {loading ? (
                     <>
                       <span style={{ width: 14, height: 14, border: '2px solid rgba(255,255,255,.3)', borderTopColor: '#fff', borderRadius: '50%', animation: 'spin .7s linear infinite', display: 'inline-block' }} />
-                      Sedang masuk…
+                      Signing in…
                     </>
-                  ) : 'Log Masuk'}
+                  ) : 'Sign In'}
                 </button>
               </form>
             </div>
