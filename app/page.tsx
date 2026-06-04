@@ -1,7 +1,10 @@
 'use client'
 import { useState } from 'react'
+import { signIn } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
+  const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPass, setShowPass] = useState(false)
@@ -13,18 +16,14 @@ export default function LoginPage() {
     if (!email || !password) { setError('Please enter your email and password.'); return }
     setError('')
     setLoading(true)
-    await new Promise(r => setTimeout(r, 1000))
 
-    // Test credentials — replace with real auth (Supabase / NextAuth) later
-    const TEST_EMAIL = 'admin@uruslaw.com'
-    const TEST_PASS  = 'uruslaw2026'
+    const result = await signIn('credentials', { email, password, redirect: false })
 
-    if (email === TEST_EMAIL && password === TEST_PASS) {
-      // Success — redirect to main app
-      window.location.href = 'http://localhost:3000'
-    } else {
+    if (result?.error) {
       setLoading(false)
       setError('Invalid email or password.')
+    } else {
+      router.push('/dashboard')
     }
   }
 
