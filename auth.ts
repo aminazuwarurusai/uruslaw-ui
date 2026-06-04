@@ -1,6 +1,5 @@
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
-import { verifyUser } from '@/lib/users'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
@@ -11,6 +10,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null
+        // Dynamic import keeps bcryptjs out of Edge runtime (proxy context)
+        const { verifyUser } = await import('@/lib/users')
         const user = await verifyUser(
           credentials.email as string,
           credentials.password as string,
