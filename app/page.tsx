@@ -1,65 +1,172 @@
-import Image from "next/image";
+'use client'
+import { useState } from 'react'
 
-export default function Home() {
+export default function LoginPage() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPass, setShowPass] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  async function handleLogin(e: React.FormEvent) {
+    e.preventDefault()
+    if (!email || !password) { setError('Sila isi emel dan kata laluan.'); return }
+    setError('')
+    setLoading(true)
+    // TODO: connect to auth API
+    await new Promise(r => setTimeout(r, 1200))
+    setLoading(false)
+    setError('Emel atau kata laluan tidak sah.')
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div style={{
+      minHeight: '100vh', display: 'flex', flexDirection: 'column',
+      background: 'linear-gradient(135deg, #0A2540 0%, #0d3060 50%, #0A2540 100%)',
+    }}>
+      {/* Top bar */}
+      <div style={{ padding: '20px 32px', display: 'flex', alignItems: 'center', gap: 12 }}>
+        <span style={{ fontFamily: 'Verdana, sans-serif', fontWeight: 700, fontSize: 18, color: '#FFFFFF', letterSpacing: '.06em' }}>
+          Urus Law
+        </span>
+        <span style={{ width: 1, height: 16, background: 'rgba(255,255,255,.2)', display: 'inline-block' }} />
+        <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#7DD3D1', letterSpacing: '.12em', textTransform: 'uppercase' }}>
+          Powered by Urus AI Sdn Bhd
+        </span>
+      </div>
+
+      {/* Main */}
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '32px 16px' }}>
+        <div style={{ width: '100%', maxWidth: 420 }}>
+
+          {/* Card */}
+          <div style={{
+            background: '#FFFFFF', borderRadius: 12,
+            boxShadow: '0 24px 64px rgba(0,0,0,.25)',
+            overflow: 'hidden',
+          }}>
+            {/* Card header strip */}
+            <div style={{ height: 4, background: 'linear-gradient(90deg, #0F7B7A, #3FA8A6)' }} />
+
+            <div style={{ padding: '36px 40px 40px' }}>
+              {/* Heading */}
+              <h1 style={{ fontFamily: 'Verdana, sans-serif', fontSize: 22, fontWeight: 700, color: '#0A2540', marginBottom: 6, letterSpacing: '-.01em' }}>
+                Log Masuk
+              </h1>
+              <p style={{ fontSize: 13, color: 'var(--text-dim)', marginBottom: 28 }}>
+                Masukkan maklumat akaun anda untuk teruskan.
+              </p>
+
+              <form onSubmit={handleLogin}>
+                {/* Email */}
+                <div style={{ marginBottom: 16 }}>
+                  <label style={labelStyle}>Emel</label>
+                  <input
+                    type="email"
+                    placeholder="nama@syarikat.com"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    style={inputStyle}
+                    onFocus={e => Object.assign(e.target.style, inputFocusStyle)}
+                    onBlur={e => Object.assign(e.target.style, inputStyle)}
+                    autoComplete="email"
+                  />
+                </div>
+
+                {/* Password */}
+                <div style={{ marginBottom: 24 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                    <label style={labelStyle}>Kata Laluan</label>
+                    <button type="button" style={{ fontSize: 11, color: 'var(--teal)', background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+                      Lupa kata laluan?
+                    </button>
+                  </div>
+                  <div style={{ position: 'relative' }}>
+                    <input
+                      type={showPass ? 'text' : 'password'}
+                      placeholder="••••••••"
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}
+                      style={{ ...inputStyle, paddingRight: 48 }}
+                      onFocus={e => Object.assign(e.target.style, { ...inputFocusStyle, paddingRight: '48px' })}
+                      onBlur={e => Object.assign(e.target.style, { ...inputStyle, paddingRight: '48px' })}
+                      autoComplete="current-password"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPass(s => !s)}
+                      style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', fontSize: 11, fontFamily: 'monospace' }}
+                    >
+                      {showPass ? 'Hide' : 'Show'}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Error */}
+                {error && (
+                  <div style={{ marginBottom: 16, padding: '10px 14px', background: 'rgba(220,38,38,.05)', border: '1px solid rgba(220,38,38,.2)', borderRadius: 6, fontSize: 12, color: 'var(--red)' }}>
+                    {error}
+                  </div>
+                )}
+
+                {/* Submit */}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  style={{
+                    width: '100%', padding: '13px 20px',
+                    background: loading ? 'var(--border2)' : 'var(--teal)',
+                    color: '#FFFFFF', border: 'none', borderRadius: 8,
+                    fontFamily: 'Verdana, sans-serif', fontSize: 13, fontWeight: 700,
+                    letterSpacing: '.04em', cursor: loading ? 'not-allowed' : 'pointer',
+                    transition: 'background .15s',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                  }}
+                  onMouseEnter={e => { if (!loading) (e.target as HTMLButtonElement).style.background = 'var(--teal-deep)' }}
+                  onMouseLeave={e => { if (!loading) (e.target as HTMLButtonElement).style.background = 'var(--teal)' }}
+                >
+                  {loading ? (
+                    <>
+                      <span style={{ width: 14, height: 14, border: '2px solid rgba(255,255,255,.3)', borderTopColor: '#fff', borderRadius: '50%', animation: 'spin .7s linear infinite', display: 'inline-block' }} />
+                      Sedang masuk…
+                    </>
+                  ) : 'Log Masuk'}
+                </button>
+              </form>
+            </div>
+          </div>
+
+          {/* Footer note */}
+          <p style={{ textAlign: 'center', marginTop: 20, fontSize: 11, color: 'rgba(255,255,255,.4)', fontFamily: 'monospace', letterSpacing: '.06em' }}>
+            URUS LAW  ·  POWERED BY URUS AI SDN BHD
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </div>
+
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+        input::placeholder { color: #9AA8B8; }
+      `}</style>
     </div>
-  );
+  )
+}
+
+const labelStyle: React.CSSProperties = {
+  display: 'block', fontSize: 11, fontWeight: 600,
+  color: '#555F6E', letterSpacing: '.08em', textTransform: 'uppercase',
+  marginBottom: 6, fontFamily: 'monospace',
+}
+
+const inputStyle: React.CSSProperties = {
+  width: '100%', padding: '11px 14px',
+  border: '1.5px solid #E5E9EE', borderRadius: 8,
+  fontSize: 13, color: '#1A1A1A', background: '#FAFBFC',
+  outline: 'none', fontFamily: 'inherit', transition: 'border-color .15s',
+}
+
+const inputFocusStyle: React.CSSProperties = {
+  ...inputStyle,
+  borderColor: '#0F7B7A',
+  background: '#FFFFFF',
+  boxShadow: '0 0 0 3px rgba(15,123,122,.1)',
 }
