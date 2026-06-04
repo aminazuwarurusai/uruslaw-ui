@@ -7,7 +7,7 @@ export default auth((req) => {
   const isLoginPage = path === '/'
 
   if (isLoggedIn && isLoginPage) {
-    return NextResponse.redirect(new URL('/dashboard', req.url))
+    return NextResponse.redirect(new URL('http://localhost:3000'))
   }
 
   if (!isLoggedIn && !isLoginPage) {

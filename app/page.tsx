@@ -23,7 +23,7 @@ export default function LoginPage() {
       setLoading(false)
       setError('Invalid email or password.')
     } else {
-      router.push('/dashboard')
+      window.location.href = 'http://localhost:3000'
     }
   }
 
