@@ -57,7 +57,7 @@ export default function SignOutPage() {
               {/* Buttons */}
               <div style={{ display: 'flex', gap: 10 }}>
                 <a
-                  href="/dashboard"
+                  href={process.env.NEXT_PUBLIC_APP_URL || 'https://legal-ai-amin-s-projectsurus.vercel.app'}
                   style={{
                     flex: 1, padding: '12px 16px', textAlign: 'center',
                     border: '1.5px solid #E5E9EE', borderRadius: 8,
