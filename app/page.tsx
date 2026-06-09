@@ -23,7 +23,10 @@ export default function LoginPage() {
       setLoading(false)
       setError('Invalid email or password.')
     } else {
-      window.location.href = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+      // Pass role so main app knows user's access level
+      const role = (result as { user?: { role?: string } })?.user?.role || 'user'
+      window.location.href = `${appUrl}?r=${role}`
     }
   }
 
