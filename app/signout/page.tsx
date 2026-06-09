@@ -17,9 +17,10 @@ export default function SignOutPage() {
     }}>
       {/* Top bar */}
       <div style={{ padding: '20px 32px', display: 'flex', alignItems: 'center', gap: 12 }}>
-        <span style={{ fontFamily: 'Verdana, sans-serif', fontWeight: 700, fontSize: 18, color: '#FFFFFF', letterSpacing: '.06em' }}>
-          Urus Law
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          <img src="/urus-logo.png" alt="Urus AI" style={{ height: 36, width: 'auto', filter: 'brightness(0) invert(1)', objectFit: 'contain' }} />
+          <span style={{ fontFamily: 'Verdana, sans-serif', fontWeight: 700, fontSize: 18, color: '#FFFFFF', letterSpacing: '.04em' }}>Law</span>
+        </div>
         <span style={{ width: 1, height: 16, background: 'rgba(255,255,255,.2)', display: 'inline-block' }} />
         <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#7DD3D1', letterSpacing: '.12em', textTransform: 'uppercase' }}>
           Powered by Urus AI Sdn Bhd
